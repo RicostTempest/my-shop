@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -26,5 +27,16 @@ public class UserController {
         List<TbUser> tbUsers = tbUserService.selectAll();
         model.addAttribute("tbUsers",tbUsers);
         return "user_list";
+    }
+
+    @RequestMapping(value = "form")
+    public String form(){
+        return "user_form";
+    }
+
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    public String save(TbUser tbUser, RedirectAttributes redirectAttributes){
+        tbUserService.save(tbUser);
+        return "redirect:/user/list";
     }
 }

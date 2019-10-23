@@ -40,7 +40,7 @@ public class TbUserServiceTest {
         tbUser.setCreated(new Date());
         tbUser.setUpdated(new Date());
 
-        tbUserService.insert(tbUser);
+        tbUserService.save(tbUser);
     }
 
     @Test

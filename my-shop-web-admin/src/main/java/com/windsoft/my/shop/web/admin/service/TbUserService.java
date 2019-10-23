@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface TbUserService {
     public List<TbUser> selectAll();
-    public void insert(TbUser tbUser);
+    public void save(TbUser tbUser);
     public void delete(Long id);
     public TbUser getById(Long id);
     public void update(TbUser tbUser);

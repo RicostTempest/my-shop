@@ -34,7 +34,7 @@
                         <div class="box-header">
                             <h3 class="box-title">用户信息</h3>
                             <div class="row" style="padding-left: 12px;padding-top: 10px">
-                                <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>添加</a>&nbsp;
+                                <a href="/user/form" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>添加</a>&nbsp;
                                 <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i>删除</a>&nbsp;
                                 <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i>导入</a>&nbsp;
                                 <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i>导出</a>

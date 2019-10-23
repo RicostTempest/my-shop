@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,8 +24,18 @@ public class TbUserServiceImpl implements TbUserService {
     }
 
     @Override
-    public void insert(TbUser tbUser) {
-        tbUserDao.insert(tbUser);
+    public void save(TbUser tbUser) {
+        //增加用户
+        if(tbUser.getId() == null){
+            tbUser.setCreated(new Date());
+            tbUser.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+            tbUserDao.insert(tbUser);
+        }
+        //编辑用户
+        else {
+            tbUserDao.update(tbUser);
+        }
+
     }
 
     @Override

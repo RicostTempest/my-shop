@@ -53,9 +53,9 @@ public class BaseResult implements Serializable {
     }
 
     private static BaseResult createResult(int status, String message){
-        BaseResult baseResult =new BaseResult();
-        baseResult.setStatus(200);;
-        baseResult.setMessage("成功");
+        BaseResult baseResult = new BaseResult();
+        baseResult.setStatus(status);;
+        baseResult.setMessage("message");
         return baseResult;
     }
 }

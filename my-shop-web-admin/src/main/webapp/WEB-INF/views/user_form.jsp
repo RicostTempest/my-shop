@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>我的商城 | 新增用户</title>
@@ -30,33 +31,36 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-6">
+                    <div class="alert alert-${baseResult.status == 200 ? "success":"danger"} alert-dismissible" ${baseResult == null ? "style='display:none'" : ""}>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        ${baseResult.message}
+                    </div>
                     <div class="box box-info">
                         <div class="box-header with-border">
                             <h3 class="box-title">添加新用户</h3>
                         </div>
                         <!-- /.box-header -->
-                        <!-- form start -->
-                        <form class="form-horizontal" action="/user/form" method="post">
+                        <form:form cssClass="form-horizontal" action="/user/save" method="post" modelAttribute="tbUser">
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">Email</label>
 
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" placeholder="Email">
+                                        <form:input path="email" cssClass="form-control required" placeholder="Email"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="username" class="col-sm-2 control-label">UserName</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="username" placeholder="UserName">
+                                        <form:input path="username" cssClass="form-control" placeholder="UserName"/>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone" class="col-sm-2 control-label">Phone</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="phone" placeholder="Phone">
+                                        <form:input path="phone" cssClass="form-control" placeholder="Phone"/>
                                     </div>
                                 </div>
 
@@ -67,7 +71,7 @@
                                 <button type="submit" class="btn btn-info pull-right">Sign in</button>
                             </div>
                             <!-- /.box-footer -->
-                        </form>
+                        </form:form>
                     </div>
                     <!-- /.box -->
                 </div>
@@ -78,5 +82,7 @@
     <jsp:include page="../includes/copyright.jsp"/>
 </div>
 <jsp:include page="../includes/footer.jsp"/>
+<script>
+</script>
 </body>
 </html>

@@ -6,8 +6,8 @@ import java.io.Serializable;
  * 自定义状态码
  */
 public class BaseResult implements Serializable {
-    private static final int STATUS_SUCCESS = 200;
-    private static final int STATUS_FAIL = 500;
+    public static final int STATUS_SUCCESS = 200;
+    public static final int STATUS_FAIL = 500;
 
     private int status;
     private String message;
@@ -55,7 +55,7 @@ public class BaseResult implements Serializable {
     private static BaseResult createResult(int status, String message){
         BaseResult baseResult = new BaseResult();
         baseResult.setStatus(status);;
-        baseResult.setMessage("message");
+        baseResult.setMessage(message);
         return baseResult;
     }
 }

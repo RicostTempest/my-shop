@@ -1,10 +1,12 @@
 package com.windsoft.my.shop.web.admin.web.controller;
 
+import com.windsoft.my.shop.commons.dto.BaseResult;
 import com.windsoft.my.shop.domain.TbUser;
 import com.windsoft.my.shop.web.admin.service.TbUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.annotation.RequestScope;
@@ -22,6 +24,17 @@ public class UserController {
     @Autowired
     private TbUserService tbUserService;
 
+    @ModelAttribute
+    public TbUser getTbUser(Long id){
+        TbUser tbUser = null;
+        if(id != null){
+            tbUser = tbUserService.getById(id);
+        }
+        else
+            tbUser = new TbUser();
+        return tbUser;
+    }
+
     @RequestMapping(value = "list",method =RequestMethod.GET)
     public String list(Model model){
         List<TbUser> tbUsers = tbUserService.selectAll();
@@ -30,13 +43,23 @@ public class UserController {
     }
 
     @RequestMapping(value = "form")
-    public String form(){
+    public String form(Model model){
         return "user_form";
     }
 
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public String save(TbUser tbUser, RedirectAttributes redirectAttributes){
-        tbUserService.save(tbUser);
-        return "redirect:/user/list";
+    public String save(TbUser tbUser, RedirectAttributes redirectAttributes, Model model){
+        BaseResult baseResult = tbUserService.save(tbUser);
+        //保存成功
+        if(baseResult.getStatus() == BaseResult.STATUS_SUCCESS){
+            redirectAttributes.addFlashAttribute("baseResult", baseResult);
+            return "redirect:/user/list";
+        }
+        //保存失败
+        else{
+            model.addAttribute("baseResult", baseResult);
+            return "user_form";
+        }
+
     }
 }

@@ -1,8 +1,10 @@
 package com.windsoft.my.shop.web.admin.service.impl;
 
+import com.windsoft.my.shop.commons.dto.BaseResult;
 import com.windsoft.my.shop.domain.TbUser;
 import com.windsoft.my.shop.web.admin.dao.TbUserDao;
 import com.windsoft.my.shop.web.admin.service.TbUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -24,18 +26,24 @@ public class TbUserServiceImpl implements TbUserService {
     }
 
     @Override
-    public void save(TbUser tbUser) {
-        //增加用户
-        if(tbUser.getId() == null){
-            tbUser.setCreated(new Date());
-            tbUser.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-            tbUserDao.insert(tbUser);
-        }
-        //编辑用户
-        else {
-            tbUserDao.update(tbUser);
-        }
+    public BaseResult save(TbUser tbUser) {
+        BaseResult baseResult = checkTbUser(tbUser);
+        if(baseResult.getStatus() == BaseResult.STATUS_SUCCESS){
+            tbUser.setUpdated(new Date());
+            //增加用户
+            if(tbUser.getId() == null){
+                tbUser.setCreated(new Date());
+                tbUser.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+                tbUserDao.insert(tbUser);
+            }
+            //编辑用户
+            else {
+                tbUserDao.update(tbUser);
+            }
 
+            baseResult.setMessage("保存用户成功");
+        }
+        return baseResult;
     }
 
     @Override
@@ -76,4 +84,15 @@ public class TbUserServiceImpl implements TbUserService {
         return null;
     }
 
+    private BaseResult checkTbUser(TbUser tbUser){
+        BaseResult baseResult = BaseResult.success();
+
+        if (StringUtils.isBlank(tbUser.getUsername())){
+            baseResult = BaseResult.fail("姓名不能为空");
+        }else if(StringUtils.isBlank(tbUser.getEmail())) {
+            baseResult = BaseResult.fail("邮箱不能为空");
+        }
+
+        return baseResult;
+    }
 }

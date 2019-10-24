@@ -1,5 +1,6 @@
 package com.windsoft.my.shop.web.admin.service;
 
+import com.windsoft.my.shop.commons.dto.BaseResult;
 import com.windsoft.my.shop.domain.TbUser;
 import org.slf4j.LoggerFactory;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface TbUserService {
     public List<TbUser> selectAll();
-    public void save(TbUser tbUser);
+    public BaseResult save(TbUser tbUser);
     public void delete(Long id);
     public TbUser getById(Long id);
     public void update(TbUser tbUser);

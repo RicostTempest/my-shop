@@ -80,4 +80,13 @@
         a.email = #{email}
     </select>
 
+    <select id="search" resultType="TbUser">
+        SELECT
+            <include refid="tbUserColumns"/>
+        FROM
+            tb_user AS a
+        WHERE
+
+    </select>
+
 </mapper>

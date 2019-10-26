@@ -19,4 +19,5 @@ public interface TbUserDao {
     public void update(TbUser tbUser);
     public List<TbUser> getByUserName(String username);
     public TbUser getByEmail(String email);
+    public List<TbUser>search(TbUser tbUser);
 }

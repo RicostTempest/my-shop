@@ -18,4 +18,5 @@ public interface TbUserService {
     public void update(TbUser tbUser);
     public List<TbUser> getByUserName(String username);
     public TbUser login(String email, String password);
+    public List<TbUser> search(String keyword);
 }

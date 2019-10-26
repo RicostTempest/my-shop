@@ -24,6 +24,12 @@ public class UserController {
     @Autowired
     private TbUserService tbUserService;
 
+
+    /**
+     * 默认在页面的Model中添加一个tbUser对象
+     * @param id
+     * @return
+     */
     @ModelAttribute
     public TbUser getTbUser(Long id){
         TbUser tbUser = null;
@@ -60,7 +66,6 @@ public class UserController {
             model.addAttribute("baseResult", baseResult);
             return "user_form";
         }
-
     }
 
     /**

@@ -102,15 +102,16 @@
 <jsp:include page="../includes/footer.jsp"/>
 
 <%--在footer下方使用否则无法使用相关的JS导入工具--%>
-<tags:modal message="至少选择一个内容进行操作" opts="confirm" url="/user/delete"/>
+<tags:modal/>
 
 <script>
+    //存放ID的数组
+    var idArray = new Array();
     /**
      * 批量删除
      */
     function deleteMulti(){
-        //存放ID的数组
-        var idArray = new Array();
+
         //push the elected id to array
         var _checkbox = App.getCheckbox();
         _checkbox.each(function () {
@@ -121,10 +122,38 @@
         });
 
         if(idArray.length === 0){
-            $("#modal-default").modal("show");
+            $("#model-message").html("没选择任何数据项");
+        }else{
+            $("#model-message").html("确定要删除吗？");
         }
+
+        //显示弹窗
+        $("#modal-default").modal("show");
     }
 
+    $(function () {
+        $("#checkboxOk").bind("click",function () {
+            del(idArray, "/user/delete");
+        });
+
+        function del(idArray, url) {
+            if(idArray.length == 0){
+                $("#modal-default").modal("hide");
+            }
+            else{
+                $.ajax({
+                    "url":url,
+                    "type":"POST",
+                    "data":{"ids":idArray.toString()},
+                    "dataType":"JSON",
+                    "success":function (data) {
+                        console.log(data);
+                    }
+                });
+                $("#modal-default").modal("hide");
+            }
+        }
+    });
 </script>
 </body>
 </html>

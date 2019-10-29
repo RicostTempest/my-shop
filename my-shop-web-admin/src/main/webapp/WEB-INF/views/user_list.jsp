@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
     <title>我的商城 | 用户管理</title>
@@ -35,7 +36,7 @@
                             <h3 class="box-title">用户信息</h3>
                             <div class="row" style="padding-left: 12px;padding-top: 10px">
                                 <a href="/user/form" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>添加</a>&nbsp;
-                                <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i>删除</a>&nbsp;
+                                <a href="#" type="button" class="btn btn-default btn-sm" onclick="deleteMulti()"><i class="fa fa-trash-o"></i>删除</a>&nbsp;
                                 <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i>导入</a>&nbsp;
                                 <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i>导出</a>
                             </div>
@@ -97,6 +98,33 @@
     <!-- /.content-wrapper -->
     <jsp:include page="../includes/copyright.jsp"/>
 </div>
+
 <jsp:include page="../includes/footer.jsp"/>
+
+<%--在footer下方使用否则无法使用相关的JS导入工具--%>
+<tags:modal message="至少选择一个内容进行操作" opts="confirm" url="/user/delete"/>
+
+<script>
+    /**
+     * 批量删除
+     */
+    function deleteMulti(){
+        //存放ID的数组
+        var idArray = new Array();
+        //push the elected id to array
+        var _checkbox = App.getCheckbox();
+        _checkbox.each(function () {
+            var _id = $(this).attr("id");
+            if(_id != null && _id != "undefine" && $(this).is(":checked")){
+                idArray.push(_id);
+            }
+        });
+
+        if(idArray.length === 0){
+            $("#modal-default").modal("show");
+        }
+    }
+
+</script>
 </body>
 </html>

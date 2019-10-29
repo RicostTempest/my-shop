@@ -39,6 +39,10 @@ var App = function () {
         init:function () {
             handlerInitCheckBox();
             handlerCheckboxAll();
+        },
+
+        getCheckbox: function () {
+            return _checkbox;
         }
     }
 }();

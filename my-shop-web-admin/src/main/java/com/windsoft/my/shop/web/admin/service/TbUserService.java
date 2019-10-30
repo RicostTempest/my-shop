@@ -19,4 +19,12 @@ public interface TbUserService {
     public List<TbUser> getByUserName(String username);
     public TbUser login(String email, String password);
     public List<TbUser> search(String keyword);
+
+    /**
+     * 批量删除
+     * @param ids
+     */
+    public void deleteMulti(String[] ids);
+
+    public List<TbUser> page(int start, int length);
 }

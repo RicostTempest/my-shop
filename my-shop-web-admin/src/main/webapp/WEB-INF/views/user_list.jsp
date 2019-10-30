@@ -34,12 +34,6 @@
                     <div class="box">
                         <div class="box-header">
                             <h3 class="box-title">用户信息</h3>
-                            <div class="row" style="padding-left: 12px;padding-top: 10px">
-                                <a href="/user/form" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>添加</a>&nbsp;
-                                <a href="#" type="button" class="btn btn-default btn-sm" onclick="deleteMulti()"><i class="fa fa-trash-o"></i>删除</a>&nbsp;
-                                <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i>导入</a>&nbsp;
-                                <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i>导出</a>
-                            </div>
 
                             <div class="box-tools">
                                 <form action="/user/search" method="post">
@@ -52,9 +46,17 @@
                                 </form>
                             </div>
                         </div>
+
+                        <div class="box-body">
+                            <a href="/user/form" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>添加</a>&nbsp;
+                            <a type="button" class="btn btn-default btn-sm" onclick="App.deleteMulti('/user/delete')"><i class="fa fa-trash-o"></i>删除</a>&nbsp;
+                            <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i>导入</a>&nbsp;
+                            <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i>导出</a>
+                        </div>
+
                         <!-- /.box-header -->
-                        <div class="box-body table-responsive no-padding">
-                            <table class="table table-hover">
+                        <div class="box-body table-responsive">
+                            <table id="dataTable" class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th><input type="checkbox" class="minimal icheck_master" /></th>
@@ -105,54 +107,19 @@
 <tags:modal/>
 
 <script>
-    //存放ID的数组
-    var idArray = new Array();
-    /**
-     * 批量删除
-     */
-    function deleteMulti(){
-
-        //push the elected id to array
-        var _checkbox = App.getCheckbox();
-        _checkbox.each(function () {
-            var _id = $(this).attr("id");
-            if(_id != null && _id != "undefine" && $(this).is(":checked")){
-                idArray.push(_id);
-            }
-        });
-
-        if(idArray.length === 0){
-            $("#model-message").html("没选择任何数据项");
-        }else{
-            $("#model-message").html("确定要删除吗？");
-        }
-
-        //显示弹窗
-        $("#modal-default").modal("show");
-    }
-
     $(function () {
-        $("#checkboxOk").bind("click",function () {
-            del(idArray, "/user/delete");
+        $("#dataTable").DataTable({
+            "info":false,
+            "lengthChange":false,
+            "ordering":false,
+            "processing":true,
+            "searching":false,
+            "serverSide":true,
+            "deferRender":true,
+            "ajax":{
+                "url":"/user/page"
+            }
         });
-
-        function del(idArray, url) {
-            if(idArray.length == 0){
-                $("#modal-default").modal("hide");
-            }
-            else{
-                $.ajax({
-                    "url":url,
-                    "type":"POST",
-                    "data":{"ids":idArray.toString()},
-                    "dataType":"JSON",
-                    "success":function (data) {
-                        console.log(data);
-                    }
-                });
-                $("#modal-default").modal("hide");
-            }
-        }
     });
 </script>
 </body>

@@ -3,6 +3,7 @@ package com.windsoft.my.shop.web.admin.web.controller;
 import com.windsoft.my.shop.commons.dto.BaseResult;
 import com.windsoft.my.shop.domain.TbUser;
 import com.windsoft.my.shop.web.admin.service.TbUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.annotation.RequestScope;
+import org.springframework.web.servlet.handler.WebRequestHandlerInterceptorAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.sound.midi.Soundbank;
+import java.util.Enumeration;
 import java.util.List;
 
 /**
@@ -85,8 +90,36 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "delete", method = RequestMethod.POST)
     public BaseResult delete(String ids){
-        BaseResult baseResult = BaseResult.success();
-        System.out.println(ids);
+        BaseResult baseResult = BaseResult.fail("未知错误");
+        if (StringUtils.isNotBlank(ids)){
+            String[] idArray = ids.split(",");
+            tbUserService.deleteMulti(idArray);
+            baseResult = BaseResult.success("数据删除成功");
+        }
+        else {
+            baseResult = BaseResult.fail("数据删除失败");
+        }
         return baseResult;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "page", method = RequestMethod.GET)
+    public String page(HttpServletRequest request){
+        Enumeration<String> parameterNames = request.getParameterNames();
+
+        String strDraw = request.getParameter("draw");
+        String strStart = request.getParameter("start");
+        String strLength = request.getParameter("length");
+
+        int draw = strDraw == null ? 0 :Integer.parseInt(strDraw);
+        int start = strStart == null ? 0 :Integer.parseInt(strStart);
+        int length = strLength == null ? 10 :Integer.parseInt(strLength);
+
+        List<TbUser> tbUsers = tbUserService.page(start,length);
+        for(TbUser tbUser : tbUsers){
+            System.out.println(tbUser.getUsername());
+        }
+
+        return "";
     }
 }

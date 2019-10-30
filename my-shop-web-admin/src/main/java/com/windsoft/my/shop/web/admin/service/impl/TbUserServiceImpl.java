@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Ricost
@@ -91,6 +93,25 @@ public class TbUserServiceImpl implements TbUserService {
         tbUser.setPhone(keyword);
         tbUser.setUsername(keyword);
         return tbUserDao.search(tbUser);
+    }
+
+    @Override
+    public void deleteMulti(String[] ids) {
+        tbUserDao.deleteMulti(ids);
+    }
+
+    /**
+     * 分页查询
+     * @param start
+     * @param length
+     * @return
+     */
+    @Override
+    public List<TbUser> page(int start, int length) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("start",start);
+        params.put("length",length);
+        return tbUserDao.page(params);
     }
 
     private BaseResult checkTbUser(TbUser tbUser){

@@ -25,7 +25,7 @@ public interface TbUserDao {
 
     /**
      * 分页查询
-     * @param params,两个参数，start/记录开始的位置，length/每页记录数
+     * @param params 两个参数，start/记录开始的位置，length/每页记录数
      * @return
      */
     List<TbUser> page(Map<String, Object> params);

@@ -1,6 +1,7 @@
 package com.windsoft.my.shop.web.admin.web.controller;
 
 import com.windsoft.my.shop.commons.dto.BaseResult;
+import com.windsoft.my.shop.commons.dto.PageInfo;
 import com.windsoft.my.shop.domain.TbUser;
 import com.windsoft.my.shop.web.admin.service.TbUserService;
 import org.apache.commons.lang3.StringUtils;
@@ -102,7 +103,7 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "page", method = RequestMethod.GET)
-    public Map<String, Object> page(HttpServletRequest request){
+    public PageInfo<TbUser> page(HttpServletRequest request){
         Map<String, Object> result = new HashMap<>();
 
         String strDraw = request.getParameter("draw");
@@ -113,18 +114,8 @@ public class UserController {
         int start = strStart == null ? 0 :Integer.parseInt(strStart);
         int length = strLength == null ? 10 :Integer.parseInt(strLength);
 
-        List<TbUser> tbUsers = tbUserService.page(start, length);
-        int count = tbUserService.count();
-        result.put("draw",draw);
-        //数据库中的总共记录数目
-        result.put("recordsTotal",count);
-        //没有被过滤的记录数
-        result.put("recordsFiltered",count);
-        //数据
-        result.put("data", tbUsers);
-        //错误信息
-        result.put("error","");
+        PageInfo<TbUser> pageInfo = tbUserService.page(start, length, draw);
 
-        return result;
+        return pageInfo;
     }
 }

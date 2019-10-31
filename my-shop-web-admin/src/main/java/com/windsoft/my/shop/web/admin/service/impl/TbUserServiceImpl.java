@@ -1,6 +1,7 @@
 package com.windsoft.my.shop.web.admin.service.impl;
 
 import com.windsoft.my.shop.commons.dto.BaseResult;
+import com.windsoft.my.shop.commons.dto.PageInfo;
 import com.windsoft.my.shop.domain.TbUser;
 import com.windsoft.my.shop.web.admin.dao.TbUserDao;
 import com.windsoft.my.shop.web.admin.service.TbUserService;
@@ -107,16 +108,25 @@ public class TbUserServiceImpl implements TbUserService {
      * @return
      */
     @Override
-    public List<TbUser> page(int start, int length) {
+    public PageInfo<TbUser> page(int start, int length, int draw,TbUser tbUser) {
         Map<String, Object> params = new HashMap<>();
         params.put("start",start);
         params.put("length",length);
-        return tbUserDao.page(params);
+        params.put("tbUser",tbUser);
+
+        int count = tbUserDao.count(tbUser);
+        PageInfo<TbUser> pageInfo = new PageInfo<>();
+        pageInfo.setDraw(draw);
+        pageInfo.setRecordsTotal(count);
+        pageInfo.setRecordsFiltered(count);
+        pageInfo.setData(tbUserDao.page(params));
+
+        return pageInfo;
     }
 
     @Override
-    public int count() {
-        return tbUserDao.count();
+    public int count(TbUser tbUser) {
+        return tbUserDao.count(tbUser);
     }
 
     private BaseResult checkTbUser(TbUser tbUser){

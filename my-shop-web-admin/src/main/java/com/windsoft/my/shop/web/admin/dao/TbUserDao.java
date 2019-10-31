@@ -34,5 +34,5 @@ public interface TbUserDao {
      * 查询总数量
      * @return
      */
-    int count();
+    int count(TbUser tbUser);
 }

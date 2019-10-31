@@ -112,5 +112,9 @@
         FROM
         tb_user AS a LIMIT #{start}, #{length}
     </select>
+    
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from tb_user
+    </select>
 
 </mapper>

@@ -69,22 +69,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <c:forEach items="#{tbUsers}" var="tbUser">
-                                    <tr>
-                                        <td><input type="checkbox" id="${tbUser.id}" class="minimal"/></td>
-                                        <td>${tbUser.id}</td>
-                                        <td><span class="label label-success">${tbUser.username}</span></td>
-                                        <td>${tbUser.phone}</td>
-                                        <td>${tbUser.email}</td>
-                                        <td><fmt:formatDate value="${tbUser.updated}" pattern="yyyy-MM-dd"/> </td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-default"><i class="fa fa-edit"></i></button>
-                                                <button type="button" class="btn btn-default"><i class="fa fa-fw fa-trash"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+<%--                                <c:forEach items="#{tbUsers}" var="tbUser">--%>
+<%--                                    <tr>--%>
+<%--                                        <td><input type="checkbox" id="${tbUser.id}" class="minimal"/></td>--%>
+<%--                                        <td>${tbUser.id}</td>--%>
+<%--                                        <td><span class="label label-success">${tbUser.username}</span></td>--%>
+<%--                                        <td>${tbUser.phone}</td>--%>
+<%--                                        <td>${tbUser.email}</td>--%>
+<%--                                        <td><fmt:formatDate value="${tbUser.updated}" pattern="yyyy-MM-dd"/> </td>--%>
+<%--                                        <td>--%>
+<%--                                            <div class="btn-group">--%>
+<%--                                                <button type="button" class="btn btn-default"><i class="fa fa-edit"></i></button>--%>
+<%--                                                <button type="button" class="btn btn-default"><i class="fa fa-fw fa-trash"></i></button>--%>
+<%--                                            </div>--%>
+<%--                                        </td>--%>
+<%--                                    </tr>--%>
+<%--                                </c:forEach>--%>
 
                                 </tbody>
 
@@ -109,7 +109,7 @@
 <script>
     $(function () {
         $("#dataTable").DataTable({
-            "info":false,
+            "info":true,
             "lengthChange":false,
             "ordering":false,
             "processing":true,
@@ -118,6 +118,50 @@
             "deferRender":true,
             "ajax":{
                 "url":"/user/page"
+            },
+            "columns":[
+                {"data":function (row,type,val,meta) {
+                       return '<input type="checkbox" id=" ' + row.id +' " class="minimal"/>';
+                    }},
+                {"data":"id"},
+                {"data":"username"},
+                {"data":"phone"},
+                {"data":"email"},
+                {"data":"updated"},
+                {"data":function (row,type,val,meta) {
+                        return  '<div class="btn-group">'+
+                                    '<button type="button" class="btn btn-default"><i class="fa fa-edit"></i></button>'+
+                                    '<button type="button" class="btn btn-default"><i class="fa fa-fw fa-trash"></i></button>'+
+                                '</div>'
+                    }},
+
+            ],
+            "language": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            "drawCallback": function( settings ) {
+                App.init();
             }
         });
     });

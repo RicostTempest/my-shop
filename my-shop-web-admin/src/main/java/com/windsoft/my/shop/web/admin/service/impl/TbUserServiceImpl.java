@@ -114,6 +114,11 @@ public class TbUserServiceImpl implements TbUserService {
         return tbUserDao.page(params);
     }
 
+    @Override
+    public int count() {
+        return tbUserDao.count();
+    }
+
     private BaseResult checkTbUser(TbUser tbUser){
         BaseResult baseResult = BaseResult.success();
 

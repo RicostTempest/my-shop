@@ -11,14 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.web.servlet.handler.WebRequestHandlerInterceptorAdapter;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.sound.midi.Soundbank;
-import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author: Ricost
@@ -104,8 +102,8 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "page", method = RequestMethod.GET)
-    public String page(HttpServletRequest request){
-        Enumeration<String> parameterNames = request.getParameterNames();
+    public Map<String, Object> page(HttpServletRequest request){
+        Map<String, Object> result = new HashMap<>();
 
         String strDraw = request.getParameter("draw");
         String strStart = request.getParameter("start");
@@ -115,11 +113,18 @@ public class UserController {
         int start = strStart == null ? 0 :Integer.parseInt(strStart);
         int length = strLength == null ? 10 :Integer.parseInt(strLength);
 
-        List<TbUser> tbUsers = tbUserService.page(start,length);
-        for(TbUser tbUser : tbUsers){
-            System.out.println(tbUser.getUsername());
-        }
+        List<TbUser> tbUsers = tbUserService.page(start, length);
+        int count = tbUserService.count();
+        result.put("draw",draw);
+        //数据库中的总共记录数目
+        result.put("recordsTotal",count);
+        //没有被过滤的记录数
+        result.put("recordsFiltered",count);
+        //数据
+        result.put("data", tbUsers);
+        //错误信息
+        result.put("error","");
 
-        return "";
+        return result;
     }
 }

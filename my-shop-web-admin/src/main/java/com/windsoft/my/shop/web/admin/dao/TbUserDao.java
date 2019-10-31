@@ -13,15 +13,15 @@ import java.util.Map;
  */
 @Repository
 public interface TbUserDao {
-    public List<TbUser> selectAll();
-    public void insert(TbUser tbUser);
-    public void delete(Long id);
-    public TbUser getById(Long id);
-    public void update(TbUser tbUser);
-    public List<TbUser> getByUserName(String username);
-    public TbUser getByEmail(String email);
-    public List<TbUser>search(TbUser tbUser);
-    public void deleteMulti(String[] ids);
+    List<TbUser> selectAll();
+    void insert(TbUser tbUser);
+    void delete(Long id);
+    TbUser getById(Long id);
+    void update(TbUser tbUser);
+    List<TbUser> getByUserName(String username);
+    TbUser getByEmail(String email);
+    List<TbUser>search(TbUser tbUser);
+    void deleteMulti(String[] ids);
 
     /**
      * 分页查询
@@ -29,4 +29,10 @@ public interface TbUserDao {
      * @return
      */
     List<TbUser> page(Map<String, Object> params);
+
+    /**
+     * 查询总数量
+     * @return
+     */
+    int count();
 }

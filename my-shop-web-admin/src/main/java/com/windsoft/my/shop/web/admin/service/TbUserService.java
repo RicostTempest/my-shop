@@ -27,4 +27,6 @@ public interface TbUserService {
     public void deleteMulti(String[] ids);
 
     public List<TbUser> page(int start, int length);
+
+    int count();
 }

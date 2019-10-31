@@ -101,7 +101,7 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping(value = "page", method = RequestMethod.GET)
-    public PageInfo<TbUser> page(HttpServletRequest request){
+    public PageInfo<TbUser> page(HttpServletRequest request, TbUser tbUser){
         Map<String, Object> result = new HashMap<>();
 
         String strDraw = request.getParameter("draw");
@@ -112,7 +112,7 @@ public class UserController {
         int start = strStart == null ? 0 :Integer.parseInt(strStart);
         int length = strLength == null ? 10 :Integer.parseInt(strLength);
 
-        PageInfo<TbUser> pageInfo = tbUserService.page(start, length, draw);
+        PageInfo<TbUser> pageInfo = tbUserService.page(start, length, draw, tbUser);
 
         return pageInfo;
     }

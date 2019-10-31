@@ -34,11 +34,11 @@ public interface TbUserService {
      * @param draw
      * @return
      */
-    PageInfo<TbUser> page(int start, int length, int draw);
+    PageInfo<TbUser> page(int start, int length, int draw, TbUser tbUser);
 
     /**
      * 查询总数目
      * @return
      */
-    int count();
+    int count(TbUser tbUser);
 }

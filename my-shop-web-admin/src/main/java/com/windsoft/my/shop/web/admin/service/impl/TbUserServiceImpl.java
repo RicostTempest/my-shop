@@ -108,23 +108,25 @@ public class TbUserServiceImpl implements TbUserService {
      * @return
      */
     @Override
-    public PageInfo<TbUser> page(int start, int length, int draw) {
+    public PageInfo<TbUser> page(int start, int length, int draw,TbUser tbUser) {
         Map<String, Object> params = new HashMap<>();
         params.put("start",start);
         params.put("length",length);
+        params.put("tbUser",tbUser);
 
+        int count = tbUserDao.count(tbUser);
         PageInfo<TbUser> pageInfo = new PageInfo<>();
         pageInfo.setDraw(draw);
-        pageInfo.setRecordsTotal(count());
-        pageInfo.setRecordsFiltered(count());
+        pageInfo.setRecordsTotal(count);
+        pageInfo.setRecordsFiltered(count);
         pageInfo.setData(tbUserDao.page(params));
 
         return pageInfo;
     }
 
     @Override
-    public int count() {
-        return tbUserDao.count();
+    public int count(TbUser tbUser) {
+        return tbUserDao.count(tbUser);
     }
 
     private BaseResult checkTbUser(TbUser tbUser){

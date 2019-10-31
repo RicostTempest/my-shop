@@ -36,14 +36,12 @@
                             <h3 class="box-title">用户信息</h3>
 
                             <div class="box-tools">
-                                <form action="/user/search" method="post">
-                                    <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
-                                        <input type="text" name="keyword" class="form-control pull-right" placeholder="搜索">
-                                        <div class="input-group-btn">
-                                            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                        </div>
+                                <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
+                                    <input type="text" id="keyword" class="form-control pull-right" placeholder="搜索">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-default" onclick="search()"><i class="fa fa-search"></i></button>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
 
@@ -107,6 +105,7 @@
 <tags:modal/>
 
 <script>
+    var _dataTable;
     $(function () {
         var _columns = [
             {"data":function (row,type,val,meta) {
@@ -126,8 +125,17 @@
                         '</div>'
                 }}
         ];
-        App.initDataTables("/user/page", _columns);
+        _dataTable = App.initDataTables("/user/page", _columns);
     });
+
+    function search() {
+        var username = $("#keyword").val();
+        var param = {
+            "username":username
+        };
+        _dataTable.settings()[0].ajax.data = param;
+        _dataTable.ajax.reload();
+    }
 
 </script>
 </body>

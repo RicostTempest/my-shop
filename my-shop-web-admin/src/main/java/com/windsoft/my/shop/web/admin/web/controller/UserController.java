@@ -48,8 +48,6 @@ public class UserController {
 
     @RequestMapping(value = "list",method =RequestMethod.GET)
     public String list(Model model){
-        List<TbUser> tbUsers = tbUserService.selectAll();
-        model.addAttribute("tbUsers",tbUsers);
         return "user_list";
     }
 
@@ -117,5 +115,10 @@ public class UserController {
         PageInfo<TbUser> pageInfo = tbUserService.page(start, length, draw);
 
         return pageInfo;
+    }
+
+    @RequestMapping(value = "detail", method = RequestMethod.GET)
+    public String detail(TbUser tbUser){
+        return "user_detail";
     }
 }

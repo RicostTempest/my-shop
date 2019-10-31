@@ -118,7 +118,9 @@
             {"data":"email"},
             {"data":"updated"},
             {"data":function (row,type,val,meta) {
+                var detailUrl = "/user/detail?id=" + row.id;
                     return  '<div class="btn-group">'+
+                        '<button type="button" class="btn btn-default" onclick="App.showDetail(\'' + detailUrl + '\')"><i class="fa fa-fw fa-tags"></i></button>'+
                         '<a href="/user/form?id='+ row.id +'" type="button" class="btn btn-default"><i class="fa fa-edit"></i></a>'+
                         '<button type="button" class="btn btn-default"><i class="fa fa-fw fa-trash"></i></button>'+
                         '</div>'
@@ -126,6 +128,7 @@
         ];
         App.initDataTables("/user/page", _columns);
     });
+
 </script>
 </body>
 </html>

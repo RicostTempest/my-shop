@@ -119,7 +119,7 @@
             {"data":"updated"},
             {"data":function (row,type,val,meta) {
                     return  '<div class="btn-group">'+
-                        '<button type="button" class="btn btn-default"><i class="fa fa-edit"></i></button>'+
+                        '<a href="/user/form?id='+ row.id +'" type="button" class="btn btn-default"><i class="fa fa-edit"></i></a>'+
                         '<button type="button" class="btn btn-default"><i class="fa fa-fw fa-trash"></i></button>'+
                         '</div>'
                 }}

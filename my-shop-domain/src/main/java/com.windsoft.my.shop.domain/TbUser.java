@@ -1,5 +1,6 @@
 package com.windsoft.my.shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.windsoft.my.shop.commons.persistence.BaseEntity;
 
 /**
@@ -37,6 +38,7 @@ public class TbUser extends BaseEntity {
         this.username = username;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

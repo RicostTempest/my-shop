@@ -109,7 +109,7 @@ var App = function () {
      * 初始化DataTables
      */
     var handlerInitDataTables = function (url, columns) {
-        $("#dataTable").DataTable({
+        var _dataTable = $("#dataTable").DataTable({
             "info":true,
             "lengthChange":false,
             "ordering":false,
@@ -150,6 +150,7 @@ var App = function () {
                 handlerCheckboxAll();
             }
         });
+        return _dataTable;
     };
 
     /**

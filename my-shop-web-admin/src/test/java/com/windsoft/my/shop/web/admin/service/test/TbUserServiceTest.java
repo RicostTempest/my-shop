@@ -60,14 +60,6 @@ public class TbUserServiceTest {
         tbUserService.update(tbUser);
     }
 
-    @Test
-    public void testGetByUserName(){
-        List<TbUser> tbUsers = tbUserService.getByUserName("uni");
-
-        for(TbUser tbUser :tbUsers){
-            System.out.println(tbUser.toString());
-        }
-    }
 
     @Test
     public void testLogin(){

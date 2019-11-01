@@ -50,17 +50,17 @@ var App = function () {
                 _idArray.push(_id);
             }
         });
-
+        //判断用户是否选择了数据项
         if(_idArray.length === 0){
             $("#model-message").html("没选择任何数据项");
         }else{
             $("#model-message").html("确定要删除吗？");
         }
 
-        //显示弹窗
+        //点击删除按钮时弹框
         $("#modal-default").modal("show");
 
-        //绑定确定事件
+        //为确定键绑定删除方法
         $("#checkboxOk").bind("click",function () {
             del();
         });
@@ -83,20 +83,22 @@ var App = function () {
                         "data":{"ids":_idArray.toString()},
                         "dataType":"JSON",
                         "success":function (data) {
+                            //接触事件绑定
+                            $("#checkboxOk").unbind("click");
                             if(data.status == 200){
-                                console.log(data)
-                                window.location.reload();
+                                $("#checkboxOk").bind("click",function () {
+                                    window.location.reload();
+                                });
                             }
                             //删除失败
                             else{
-                                $("#checkboxOk").unbind("click");
                                 //强制更改绑定事件
                                 $("#checkboxOk").bind("click",function () {
                                     $("#modal-default").modal("hide");
                                 });
-                                $("#modal-default").modal("show");
-                                $("#model-message").html(data.message);
                             }
+                            $("#modal-default").modal("show");
+                            $("#model-message").html(data.message);
                         }
                     });
                 },500);
@@ -154,7 +156,7 @@ var App = function () {
     };
 
     /**
-     * 查看详情
+     * 查看详情，通过Ajax请求html的方式进行装载，将需要显示的HTML代码加入弹框中
      * @param url
      */
     var handlerShowDetail = function (url) {
@@ -174,10 +176,6 @@ var App = function () {
         init:function () {
             handlerInitCheckBox();
             handlerCheckboxAll();
-        },
-
-        getCheckbox: function () {
-            return _checkbox;
         },
 
         deleteMulti:function (url) {

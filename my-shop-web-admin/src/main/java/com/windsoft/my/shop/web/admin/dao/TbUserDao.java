@@ -18,7 +18,6 @@ public interface TbUserDao {
     void delete(Long id);
     TbUser getById(Long id);
     void update(TbUser tbUser);
-    List<TbUser> getByUserName(String username);
     TbUser getByEmail(String email);
     List<TbUser>search(TbUser tbUser);
     void deleteMulti(String[] ids);

@@ -38,7 +38,7 @@ public class TbUser extends BaseEntity {
         this.username = username;
     }
 
-    @JsonIgnore
+    @JsonIgnore   //标注为不进行json数据化
     public String getPassword() {
         return password;
     }

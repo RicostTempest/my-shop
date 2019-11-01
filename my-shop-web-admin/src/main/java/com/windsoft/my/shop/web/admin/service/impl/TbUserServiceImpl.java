@@ -64,10 +64,7 @@ public class TbUserServiceImpl implements TbUserService {
         tbUserDao.update(tbUser);
     }
 
-    @Override
-    public List<TbUser> getByUserName(String username) {
-        return tbUserDao.getByUserName(username);
-    }
+
 
     @Override
     public TbUser login(String email, String password) {

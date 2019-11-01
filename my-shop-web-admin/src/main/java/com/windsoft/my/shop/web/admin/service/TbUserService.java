@@ -16,7 +16,6 @@ public interface TbUserService {
     void delete(Long id);
     TbUser getById(Long id);
     void update(TbUser tbUser);
-    List<TbUser> getByUserName(String username);
     TbUser login(String email, String password);
     List<TbUser> search(String keyword);
 

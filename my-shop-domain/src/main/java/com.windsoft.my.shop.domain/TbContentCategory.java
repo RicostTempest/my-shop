@@ -10,7 +10,7 @@ public class TbContentCategory extends BaseEntity {
     private String name;
     private Integer status;
     private Integer sortOrder;
-    private String isParent;
+    private Boolean isParent;
 
     public Long getParentId() {
         return parentId;
@@ -44,11 +44,11 @@ public class TbContentCategory extends BaseEntity {
         this.sortOrder = sortOrder;
     }
 
-    public String getIsParent() {
+    public Boolean getParent() {
         return isParent;
     }
 
-    public void setIsParent(String isParent) {
+    public void setIsParent(Boolean isParent) {
         this.isParent = isParent;
     }
 }

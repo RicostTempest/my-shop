@@ -40,7 +40,6 @@
 
                         <div class="box-body">
                             <a href="" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>添加</a>&nbsp;
-                            <a type="button" class="btn btn-default btn-sm" onclick=""><i class="fa fa-trash-o"></i>删除</a>&nbsp;
                             <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i>导入</a>&nbsp;
                             <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i>导出</a>
                         </div>
@@ -53,6 +52,7 @@
                                         <th>ID</th>
                                         <th>名称</th>
                                         <th>排序</th>
+                                        <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -61,6 +61,13 @@
                                         <td>${tbContentCategory.id}</td>
                                         <td>${tbContentCategory.name}</td>
                                         <td>${tbContentCategory.sortOrder}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="#" type="button" class="btn btn-default"><i class="fa fa-edit" title="修改"></i></a>
+                                                <button type="button" class="btn btn-default"><i class="fa fa-fw fa-trash" title="删除"></i></button>
+                                                <a href="#" type="button" class="btn btn-default"><i class="fa fa-fw fa-code-fork" title="增加下级菜单"></i></a>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>
@@ -87,6 +94,7 @@
 <script>
     $(function () {
         $('#treeTable').treeTable({
+            column:1,
             expandLevel:2
         });
     });

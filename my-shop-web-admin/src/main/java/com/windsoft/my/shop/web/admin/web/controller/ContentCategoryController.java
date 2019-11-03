@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +24,35 @@ public class ContentCategoryController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(Model model){
-        List<TbContentCategory> tbContentCategories = tbContentCategoryService.selectAll();
-        model.addAttribute("tbContentCategories", tbContentCategories);
+        List<TbContentCategory> targetList = new ArrayList<>();
+        List<TbContentCategory> sourceList = tbContentCategoryService.selectAll();
+        //排序
+        sortList(sourceList,targetList,0L);
+        model.addAttribute("tbContentCategories", targetList);
         return "content_category_list";
+    }
+
+    /**
+     * 对数据库中返回的数据进行排序
+     * @param sourceList 数据源集合
+     * @param targetList 排序后的集合
+     * @param parentId 父节点的ID
+     */
+    private void sortList(List<TbContentCategory> sourceList, List<TbContentCategory> targetList, Long parentId){
+        for(TbContentCategory tbContentCategory : sourceList){
+            if(tbContentCategory.getParentId().equals(parentId)){
+                targetList.add(tbContentCategory);
+
+                //判断有没有子节点,如果有继续增加
+                if(tbContentCategory.getParent()){
+                    for (TbContentCategory contentCategory : sourceList) {
+                        if(contentCategory.getParentId().equals(tbContentCategory.getId())){
+                            sortList(sourceList,targetList,tbContentCategory.getId());
+                            break;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

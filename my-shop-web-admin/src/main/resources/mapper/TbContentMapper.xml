@@ -75,7 +75,9 @@
         </foreach>
     </delete>
 
-    <select id="page" resultType="TbUser" parameterType="java.util.Map">
+
+<!--    必须修改resultType属性为返回的类值-->
+    <select id="page" resultType="TbContent" parameterType="java.util.Map">
         SELECT
         <include refid="tbContentColumns"/>
         FROM
@@ -95,6 +97,15 @@
                 AND tb.title LIKE CONCAT ('%',#{title},'%')
             </if>
         </where>
+    </select>
+
+    <select id="getById" resultType="TbContent">
+        SELECT
+        <include refid="tbContentColumns"/>
+        FROM
+        tb_content AS tb
+        WHERE
+        id = #{id}
     </select>
 
 </mapper>

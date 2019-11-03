@@ -50,6 +50,11 @@ public class TbContentServiceImpl implements TbContentService {
     }
 
     @Override
+    public TbContent getById(Long id) {
+        return tbContentDao.getById(id);
+    }
+
+    @Override
     public void update(TbContent tbContent) {
         tbContentDao.update(tbContent);
     }

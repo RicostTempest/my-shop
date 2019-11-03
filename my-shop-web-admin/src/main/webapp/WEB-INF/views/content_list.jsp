@@ -4,7 +4,7 @@
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
-    <title>我的商城 | 用户管理</title>
+    <title>我的商城 | 内容管理</title>
     <jsp:include page="../includes/header.jsp" />
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -19,12 +19,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                用户列表
-                <small>用户管理</small>
+                内容
+                <small>内容管理</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-user"></i> 首页</a></li>
-                <li class="active">用户管理</li>
+                <li class="active">控制面板</li>
             </ol>
         </section>
         <!-- Main content -->
@@ -33,7 +33,7 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-header">
-                            <h3 class="box-title">用户信息</h3>
+                            <h3 class="box-title">内容预览</h3>
 
                             <div class="box-tools">
                                 <div class="input-group input-group-sm hidden-xs" style="width: 150px;">
@@ -46,8 +46,8 @@
                         </div>
 
                         <div class="box-body">
-                            <a href="/user/form" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>添加</a>&nbsp;
-                            <a type="button" class="btn btn-default btn-sm" onclick="App.deleteMulti('/user/delete')"><i class="fa fa-trash-o"></i>删除</a>&nbsp;
+                            <a href="/content/form" type="button" class="btn btn-default btn-sm"><i class="fa fa-plus"></i>添加</a>&nbsp;
+                            <a type="button" class="btn btn-default btn-sm" onclick="App.deleteMulti('/content/delete')"><i class="fa fa-trash-o"></i>删除</a>&nbsp;
                             <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-download"></i>导入</a>&nbsp;
                             <a href="#" type="button" class="btn btn-default btn-sm"><i class="fa fa-upload"></i>导出</a>
                         </div>
@@ -56,33 +56,20 @@
                         <div class="box-body table-responsive">
                             <table id="dataTable" class="table table-hover">
                                 <thead>
-                                    <tr>
-                                        <th><input type="checkbox" class="minimal icheck_master" /></th>
-                                        <th>ID</th>
-                                        <th>用户名</th>
-                                        <th>手机号</th>
-                                        <th>邮箱</th>
-                                        <th>更新时间</th>
-                                        <th>操作</th>
-                                    </tr>
+                                <tr>
+                                    <th><input type="checkbox" class="minimal icheck_master" /></th>
+                                    <th>ID</th>
+                                    <th>标题</th>
+                                    <th>子标题</th>
+                                    <th>标题描述</th>
+                                    <th>链接</th>
+                                    <th>图片一</th>
+                                    <th>图片二</th>
+                                    <th>更新时间</th>
+                                    <th>操作</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-<%--                                <c:forEach items="#{tbUsers}" var="tbUser">--%>
-<%--                                    <tr>--%>
-<%--                                        <td><input type="checkbox" id="${tbUser.id}" class="minimal"/></td>--%>
-<%--                                        <td>${tbUser.id}</td>--%>
-<%--                                        <td><span class="label label-success">${tbUser.username}</span></td>--%>
-<%--                                        <td>${tbUser.phone}</td>--%>
-<%--                                        <td>${tbUser.email}</td>--%>
-<%--                                        <td><fmt:formatDate value="${tbUser.updated}" pattern="yyyy-MM-dd"/> </td>--%>
-<%--                                        <td>--%>
-<%--                                            <div class="btn-group">--%>
-<%--                                                <button type="button" class="btn btn-default"><i class="fa fa-edit"></i></button>--%>
-<%--                                                <button type="button" class="btn btn-default"><i class="fa fa-fw fa-trash"></i></button>--%>
-<%--                                            </div>--%>
-<%--                                        </td>--%>
-<%--                                    </tr>--%>
-<%--                                </c:forEach>--%>
 
                                 </tbody>
 
@@ -112,28 +99,46 @@
                     return '<input type="checkbox" id=" ' + row.id +' " class="minimal"/>';
                 }},
             {"data":"id"},
-            {"data":"username"},
-            {"data":"phone"},
-            {"data":"email"},
+            {"data":"title"},
+            {"data":"subTitle"},
+            {"data":"titleDesc"},
+            {"data":function (row,type,val,meta) {
+                    if(row.url == null)
+                        return '';
+                    //url
+                    return '<a href="' + row.url + '" target="_blank">查看</a>';
+                }},
+            {"data":function (row,type,val,meta) {
+                    if(row.pic == null)
+                        return '';
+                    //pic
+                    return '<a href="' + row.pic + '" target="_blank">图片</a>';
+                }},
+            {"data":function (row,type,val,meta) {
+                    if(row.pic2 == null)
+                        return '';
+                    //pic2
+                    return '<a href="' + row.pic2 + '" target="_blank">图片2</a>';
+                }},
             {"data":function (row,type,val,meta) {
                     return DateTime.format(row.updated, 'yyyy-MM-dd HH:mm');
                 }},
             {"data":function (row,type,val,meta) {
-                var detailUrl = "/user/detail?id=" + row.id;
+                    var detailUrl = "/content/detail?id=" + row.id;
                     return  '<div class="btn-group">'+
                         '<button type="button" class="btn btn-default" onclick="App.showDetail(\'' + detailUrl + '\')"><i class="fa fa-fw fa-tags"></i></button>'+
-                        '<a href="/user/form?id='+ row.id +'" type="button" class="btn btn-default"><i class="fa fa-edit"></i></a>'+
+                        '<a href="/content/form?id='+ row.id +'" type="button" class="btn btn-default"><i class="fa fa-edit"></i></a>'+
                         '<button type="button" class="btn btn-default"><i class="fa fa-fw fa-trash"></i></button>'+
                         '</div>'
                 }}
         ];
-        _dataTable = App.initDataTables("/user/page", _columns);
+        _dataTable = App.initDataTables("/content/page", _columns);
     });
 
     function search() {
-        var username = $("#keyword").val();
+        var title = $("#keyword").val();
         var param = {
-            "username":username
+            "title":title
         };
         _dataTable.settings()[0].ajax.data = param;
         _dataTable.ajax.reload();

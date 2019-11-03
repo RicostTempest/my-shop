@@ -11,6 +11,7 @@ public interface TbContentDao {
     List<TbContent> selectAll();
     void insert(TbContent tbContent);
     void delete(Long id);
+    TbContent getById(Long id);
     void update(TbContent tbContent);
     void deleteMulti(String[] ids);
 

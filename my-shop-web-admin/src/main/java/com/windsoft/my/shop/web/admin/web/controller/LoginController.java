@@ -93,6 +93,12 @@ public class LoginController {
         }
     }
 
+    /*** 功能描述:注销
+     * @param httpServletRequest
+    * @return: java.lang.String
+    * @Author: RicostTempest
+    * @Date: 2019/11/6 15:19
+    */
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout(HttpServletRequest httpServletRequest){
         httpServletRequest.getSession().invalidate();

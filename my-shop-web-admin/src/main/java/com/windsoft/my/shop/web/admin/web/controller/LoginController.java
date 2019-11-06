@@ -27,6 +27,11 @@ public class LoginController {
     @Autowired
     TbUserService tbUserService;
 
+    /**
+     * 输入框为空或者是login时跳转到login.jsp页面
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping(value = {"", "login"}, method = RequestMethod.GET)
     public String login(HttpServletRequest httpServletRequest){
 

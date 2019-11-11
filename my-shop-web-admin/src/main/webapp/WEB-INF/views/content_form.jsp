@@ -73,7 +73,21 @@
 
 <script src="/static/assets/plugins/jquery-ztree/js/jquery.ztree.core-3.5.min.js"></script>
 <%--在footer下方使用否则无法使用相关的JS导入工具--%>
-<tags:modal/>
+<tags:modal title="请选择" message="<ul id='myTree' class='ztree'></ul>"/>
+<script>
+    $(function () {
+        var setting = {
+            async: {
+                enable: true,
+                url:"../asyncData/getNodes.php",
+                autoParam:["id", "name=n", "level=lv"],
+                otherParam:{"otherParam":"zTreeAsyncTest"},
+                dataFilter: filter
+            }
+        };
+        $.fn.zTree.init($("#myTree"), setting);
+    });
+</script>
 <script>
 </script>
 </body>

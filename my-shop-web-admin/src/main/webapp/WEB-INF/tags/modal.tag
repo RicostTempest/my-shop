@@ -1,6 +1,7 @@
 <%@ tag language="java" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ attribute name="title" type="java.lang.String" required="false" description="拟态框的标题" %>
+<%@ attribute name="message" type="java.lang.String" required="false" description="拟态框的内容" %>
 <!-- /delete.modal-content -->
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
@@ -11,7 +12,7 @@
                 <h4 class="modal-title">${title == null ? "温馨提示" : title}</h4>
             </div>
             <div class="modal-body">
-                <p id="model-message">${message}</p>
+                <p id="model-message">${message == null ? "内容提示" : message}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left" data-dismiss="modal">关闭</button>

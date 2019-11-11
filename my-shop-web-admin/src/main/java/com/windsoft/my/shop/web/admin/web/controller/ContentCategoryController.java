@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,12 @@ public class ContentCategoryController {
         sortList(sourceList,targetList,0L);
         model.addAttribute("tbContentCategories", targetList);
         return "content_category_list";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "tree/data", method = RequestMethod.GET)
+    public List<TbContentCategory> treeData(){
+        return null;
     }
 
     /**

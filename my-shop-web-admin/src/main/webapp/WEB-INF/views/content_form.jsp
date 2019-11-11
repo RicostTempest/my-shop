@@ -7,6 +7,7 @@
 <head>
     <title>我的商城 | 新增内容</title>
     <jsp:include page="../includes/header.jsp" />
+    <link rel="stylesheet" href="/static/assets/plugins/jquery-ztree/css/zTreeStyle/zTreeStyle.min.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -70,6 +71,7 @@
 </div>
 <jsp:include page="../includes/footer.jsp"/>
 
+<script src="/static/assets/plugins/jquery-ztree/js/jquery.ztree.core-3.5.min.js"></script>
 <%--在footer下方使用否则无法使用相关的JS导入工具--%>
 <tags:modal/>
 <script>

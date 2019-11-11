@@ -120,6 +120,7 @@
                     //pic2
                     return '<a href="' + row.pic2 + '" target="_blank">图片2</a>';
                 }},
+            //使用DateTime工具类进行时间数据的格式化
             {"data":function (row,type,val,meta) {
                     return DateTime.format(row.updated, 'yyyy-MM-dd HH:mm');
                 }},

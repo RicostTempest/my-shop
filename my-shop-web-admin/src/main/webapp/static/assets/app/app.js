@@ -156,6 +156,37 @@ var App = function () {
     };
 
     /**
+     * 初始化zTree
+     * @param url
+     * @param autoParam
+     * @param callback
+     */
+    var handlerInitZTree = function (url,autoParam,callback) {
+        var setting = {
+            view:{
+                selectedMulti:false
+            },
+            async: {
+                enable: true,
+                url:url,
+                autoParam:autoParam
+            }
+        };
+        $.fn.zTree.init($("#myTree"), setting);
+        $("#checkboxOk").bind("click", function () {
+            var zTree = $.fn.zTree.getZTreeObj("myTree");
+            var nodes = zTree.getSelectedNodes();
+
+            if(nodes.length == 0){
+                alert("请选择一个结点");
+            }
+            else{
+                callback(nodes);
+            }
+        })
+    };
+
+    /**
      * 查看详情，通过Ajax请求html的方式进行装载，将需要显示的HTML代码加入弹框中
      * @param url
      */
@@ -186,6 +217,15 @@ var App = function () {
         },
         showDetail:function (url) {
             handlerShowDetail(url);
+        },
+        /**
+         * 初始化ZTree
+         * @param url
+         * @param autoParam
+         * @param callback
+         */
+        initZTree:function (url,autoParam,callback) {
+            handlerInitZTree(url,autoParam,callback);
         }
 
     }

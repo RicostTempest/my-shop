@@ -77,30 +77,12 @@
 <tags:modal title="请选择" message="<ul id='myTree' class='ztree'></ul>"/>
 <script>
     $(function () {
-        var setting = {
-            view:{
-                selectedMulti:false
-            },
-            async: {
-                enable: true,
-                url:"/content/category/tree/data",
-                autoParam:["id"]
-            }
-        };
-        $.fn.zTree.init($("#myTree"), setting);
-        $("#checkboxOk").bind("click", function () {
-            var zTree = $.fn.zTree.getZTreeObj("myTree");
-            var nodes = zTree.getSelectedNodes();
+        App.initZTree("/content/category/tree/data",["id"],function (nodes) {
+            var node = nodes[0];
+            $("#categoryId").val(node.id);
+            $("#categoryName").val(node.name);
+            $("#modal-default").modal("hide");
 
-            if(nodes.length == 0){
-                alert("请选择一个结点");
-            }
-            else{
-                var node = nodes[0];
-                $("#categoryId").val(node.id);
-                $("#categoryName").val(node.name)
-                $("#modal-default").modal("hide");
-            }
         })
     });
 </script>

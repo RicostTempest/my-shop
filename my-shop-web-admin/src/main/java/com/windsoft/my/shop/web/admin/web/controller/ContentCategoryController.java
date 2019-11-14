@@ -33,10 +33,18 @@ public class ContentCategoryController {
         return "content_category_list";
     }
 
+
+    /**
+     * ResponseBody 变为JSON数据
+     * @return
+     */
     @ResponseBody
-    @RequestMapping(value = "tree/data", method = RequestMethod.GET)
-    public List<TbContentCategory> treeData(){
-        return null;
+    @RequestMapping(value = "tree/data", method = RequestMethod.POST)
+    public List<TbContentCategory> treeData(Long id){
+        if(id==null){
+            id = 0L;
+        }
+        return tbContentCategoryService.selectByPid(id);
     }
 
     /**

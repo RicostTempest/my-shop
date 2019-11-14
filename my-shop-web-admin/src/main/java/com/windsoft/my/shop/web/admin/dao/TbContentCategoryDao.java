@@ -8,4 +8,11 @@ import java.util.List;
 @Repository
 public interface TbContentCategoryDao {
     List<TbContentCategory> selectAll();
+
+    /**
+     * 根据父节点Id查询子节点
+     * @param id
+     * @return
+     */
+    List<TbContentCategory> selectByPid(Long id);
 }

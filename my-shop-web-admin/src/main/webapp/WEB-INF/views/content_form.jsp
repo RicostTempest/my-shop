@@ -49,7 +49,8 @@
                                     <label for="categoryId" class="col-sm-2 control-label">父级类目</label>
 
                                     <div class="col-sm-10">
-                                        <form:input path="categoryId" cssClass="form-control required " data-toggle="modal" data-target="#modal-default"/>
+                                        <form:hidden path="categoryId"/>
+                                        <input id="categoryName" class="form-control required " data-toggle="modal" data-target="#modal-default"/>
                                     </div>
                                 </div>
                             </div>
@@ -77,18 +78,31 @@
 <script>
     $(function () {
         var setting = {
+            view:{
+                selectedMulti:false
+            },
             async: {
                 enable: true,
-                url:"../asyncData/getNodes.php",
-                autoParam:["id", "name=n", "level=lv"],
-                otherParam:{"otherParam":"zTreeAsyncTest"},
-                dataFilter: filter
+                url:"/content/category/tree/data",
+                autoParam:["id"]
             }
         };
         $.fn.zTree.init($("#myTree"), setting);
+        $("#checkboxOk").bind("click", function () {
+            var zTree = $.fn.zTree.getZTreeObj("myTree");
+            var nodes = zTree.getSelectedNodes();
+
+            if(nodes.length == 0){
+                alert("请选择一个结点");
+            }
+            else{
+                var node = nodes[0];
+                $("#categoryId").val(node.id);
+                $("#categoryName").val(node.name)
+                $("#modal-default").modal("hide");
+            }
+        })
     });
-</script>
-<script>
 </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.windsoft.my.shop.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.windsoft.my.shop.commons.persistence.BaseEntity;
 
 /**
@@ -10,6 +11,7 @@ public class TbContentCategory extends BaseEntity {
     private String name;
     private Integer status;
     private Integer sortOrder;
+    @JsonProperty(value = "isParent") //在作为JSON数据发送时使用别名
     private Boolean isParent;
 
     public Long getParentId() {

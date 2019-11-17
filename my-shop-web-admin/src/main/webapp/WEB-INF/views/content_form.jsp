@@ -8,6 +8,8 @@
     <title>我的商城 | 新增内容</title>
     <jsp:include page="../includes/header.jsp" />
     <link rel="stylesheet" href="/static/assets/plugins/jquery-ztree/css/zTreeStyle/zTreeStyle.min.css">
+    <link rel="stylesheet" href="/static/assets/plugins/dropzone/dropzone.css" />
+    <link rel="stylesheet" href="/static/assets/plugins/dropzone/min/basic.min.css" />
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -53,6 +55,58 @@
                                         <input id="categoryName" class="form-control required " data-toggle="modal" data-target="#modal-default"/>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-2 control-label">Title</label>
+
+                                    <div class="col-sm-10">
+                                        <form:input path="title" cssClass="form-control" placeholder="Title"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title" class="col-sm-2 control-label">subTitle</label>
+
+                                    <div class="col-sm-10">
+                                        <form:input path="subTitle" cssClass="form-control" placeholder="SubTitle"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="titleDesc" class="col-sm-2 control-label">titleDesc</label>
+
+                                    <div class="col-sm-10">
+                                        <form:input path="titleDesc" cssClass="form-control" placeholder="TitleDesc"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="url" class="col-sm-2 control-label">Url</label>
+
+                                    <div class="col-sm-10">
+                                        <form:input path="url" cssClass="form-control" placeholder="Url"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="url" class="col-sm-2 control-label">pic</label>
+
+                                    <div class="col-sm-10">
+                                        <form:input path="pic" cssClass="form-control" placeholder="Pic"/>
+                                        <div id="dropz" class="dropzone"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="url" class="col-sm-2 control-label">pic2</label>
+
+                                    <div class="col-sm-10">
+                                        <form:input path="pic2" cssClass="form-control" placeholder="Pic2"/>
+                                        <div id="dropz2" class="dropzone"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="url" class="col-sm-2 control-label">content</label>
+
+                                    <div class="col-sm-10">
+                                        <form:textarea path="content" cssClass="form-control" placeholder="Content"/>
+                                    </div>
+                                </div>
+
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
@@ -73,6 +127,7 @@
 <jsp:include page="../includes/footer.jsp"/>
 
 <script src="/static/assets/plugins/jquery-ztree/js/jquery.ztree.core-3.5.min.js"></script>
+<script src="/static/assets/plugins/dropzone/min/dropzone.min.js"></script> //图片上传
 <%--在footer下方使用否则无法使用相关的JS导入工具--%>
 <tags:modal title="请选择" message="<ul id='myTree' class='ztree'></ul>"/>
 <script>
@@ -84,6 +139,25 @@
             $("#modal-default").modal("hide");
 
         })
+    });
+
+    App.initDropzone({
+        id:"#dropz",
+        url:"/upload",
+        init:function () {
+            this.on("success",function (file,data) {
+                $("#pic").val(data.fileName);
+            });
+        }
+    });
+    App.initDropzone({
+        id:"#dropz2",
+        url:"/upload",
+        init:function () {
+            this.on("success",function (file,data) {
+                $("#pic2").val(data.fileName);
+            });
+        }
     });
 </script>
 </body>

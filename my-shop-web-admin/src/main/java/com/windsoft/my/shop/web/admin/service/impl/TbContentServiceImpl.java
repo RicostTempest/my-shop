@@ -2,10 +2,10 @@ package com.windsoft.my.shop.web.admin.service.impl;
 
 import com.windsoft.my.shop.commons.dto.BaseResult;
 import com.windsoft.my.shop.commons.dto.PageInfo;
+import com.windsoft.my.shop.commons.validator.BeanValidator;
 import com.windsoft.my.shop.domain.TbContent;
 import com.windsoft.my.shop.web.admin.dao.TbContentDao;
 import com.windsoft.my.shop.web.admin.service.TbContentService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +26,12 @@ public class TbContentServiceImpl implements TbContentService {
 
     @Override
     public BaseResult save(TbContent tbContent) {
-        BaseResult baseResult = checkTbContent(tbContent);
-        if(baseResult.getStatus() == BaseResult.STATUS_SUCCESS){
+        String validator = BeanValidator.validator(tbContent);
+        if(validator != null){
+            return BaseResult.fail(validator);
+        }
+        //通过验证
+        else{
             tbContent.setUpdated(new Date());
             //增加用户
             if(tbContent.getId() == null){
@@ -39,9 +43,8 @@ public class TbContentServiceImpl implements TbContentService {
                 tbContentDao.update(tbContent);
             }
 
-            baseResult.setMessage("保存内容信息成功");
+            return BaseResult.success("保存内容信息成功");
         }
-        return baseResult;
     }
 
     @Override
@@ -84,17 +87,5 @@ public class TbContentServiceImpl implements TbContentService {
     @Override
     public int count(TbContent tbContent) {
         return tbContentDao.count(tbContent);
-    }
-
-    private BaseResult checkTbContent(TbContent tbContent){
-        BaseResult baseResult = BaseResult.success();
-
-        if (StringUtils.isBlank(tbContent.getTitle())){
-            baseResult = BaseResult.fail("标题不能为空");
-        }else if(tbContent.getCategoryId() == null) {
-            baseResult = BaseResult.fail("内容的所属分类不能为空");
-        }
-
-        return baseResult;
     }
 }

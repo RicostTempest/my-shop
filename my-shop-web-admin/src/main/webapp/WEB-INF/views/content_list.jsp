@@ -92,6 +92,7 @@
 <tags:modal/>
 
 <script>
+    var file_path = "/static/upload/";
     var _dataTable;
     $(function () {
         var _columns = [
@@ -112,7 +113,7 @@
                     if(row.pic == null)
                         return '';
                     //pic
-                    return '<a href="' + row.pic + '" target="_blank">图片</a>';
+                    return '<a href="' +file_path + row.pic + '" target="_blank">图片</a>';
                 }},
             {"data":function (row,type,val,meta) {
                     if(row.pic2 == null)

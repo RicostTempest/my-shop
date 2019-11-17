@@ -7,6 +7,25 @@ var App = function () {
     //用于存放ID的数组
     var _idArray;
 
+    //默认的DropZone对象
+    var defaultDropzoneOpts = {
+        url: "",
+        paramName:"dropFile",  //后台接受的参数名称规定为 dropFile 在属性 MultipartFile dropFile中匹配
+        maxFiles: 1,// 一次性上传的文件数量上限
+        maxFilesize: 2, // 文件大小，单位：MB
+        acceptedFiles: ".jpg,.gif,.png,.jpeg", // 上传的类型
+        addRemoveLinks: true,
+        parallelUploads: 1,// 一次上传的文件数量
+        dictDefaultMessage: '拖动文件至此或者点击上传',
+        dictMaxFilesExceeded: "您最多只能上传" + this.maxFiles + "个文件！",
+        dictResponseError: '文件上传失败!',
+        dictInvalidFileType: "文件类型只能是*.jpg,*.gif,*.png,*.jpeg。",
+        dictFallbackMessage: "浏览器不受支持",
+        dictFileTooBig: "文件过大上传文件最大支持.",
+        dictRemoveLinks: "删除",
+        dictCancelUpload: "取消",
+    };
+
     /**
      * 私有方法初始化ICheck
      */
@@ -185,6 +204,16 @@ var App = function () {
             }
         })
     };
+    
+    var handlerInitDropzone = function (opts) {
+        //关闭自动发现功能
+        Dropzone.autoDiscover = false;
+
+        //使defaultDropzoneOpts继承来自opts的内部属性
+        $.extend(defaultDropzoneOpts, opts);
+
+        var myDropzone = new Dropzone(defaultDropzoneOpts.id, defaultDropzoneOpts);
+    };
 
     /**
      * 查看详情，通过Ajax请求html的方式进行装载，将需要显示的HTML代码加入弹框中
@@ -226,6 +255,14 @@ var App = function () {
          */
         initZTree:function (url,autoParam,callback) {
             handlerInitZTree(url,autoParam,callback);
+        },
+
+        /**
+         * 初始化Dropzone
+         * @param opts
+         */
+        initDropzone:function (opts) {
+            handlerInitDropzone(opts);
         }
 
     }

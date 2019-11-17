@@ -63,6 +63,11 @@ public class TbContentServiceImpl implements TbContentService {
     }
 
     @Override
+    public List<TbContent> search(String keyword) {
+        return null;
+    }
+
+    @Override
     public void deleteMulti(String[] ids) {
         tbContentDao.deleteMulti(ids);
     }

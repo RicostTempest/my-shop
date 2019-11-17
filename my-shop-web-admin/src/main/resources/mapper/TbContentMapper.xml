@@ -13,7 +13,13 @@
         tb.pic2,
         tb.content,
         tb.created,
-        tb.updated
+        tb.updated,
+        b.id AS "tbcontentCategory.id",
+        b.name AS "tbcontentCategory.name"
+    </sql>
+
+    <sql id="tbContentJoins">
+        LEFT JOIN tb_content_category AS b ON tb.category_id = b.id
     </sql>
 
     <select id="selectAll" resultType="TbContent">
@@ -37,7 +43,7 @@
          `updated`
          )
          VALUES (
-         #{categoryId},
+         #{tbContentCategory.id},
          #{title},
          #{subTitle},
          #{titleDesc},
@@ -54,7 +60,7 @@
         UPDATE
             tb_content
         SET
-         `category_id` = #{categoryId},
+         `category_id` = #{tbContentCategory.id},
          `title` = #{title},
          `sub_title` = #{subTitle},
          `title_desc` = #{titleDesc},
@@ -82,6 +88,7 @@
         <include refid="tbContentColumns"/>
         FROM
         tb_content AS tb
+        <include refid="tbContentJoins"/>
         <where>
             <if test="tbContent.title != null and tbContent.title !='' ">
                 AND tb.title LIKE CONCAT ('%',#{tbContent.title},'%')
@@ -104,8 +111,9 @@
         <include refid="tbContentColumns"/>
         FROM
         tb_content AS tb
+        <include refid="tbContentJoins"/>
         WHERE
-        id = #{id}
+        tb.id = #{id}
     </select>
 
 </mapper>

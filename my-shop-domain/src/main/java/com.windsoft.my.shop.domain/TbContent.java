@@ -6,8 +6,6 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotNull;
 
 public class TbContent extends BaseEntity {
-    @NotNull(message = "父级类目不能为空")
-    private Long categoryId;
 
     @Length(min = 1, max = 20, message = "标题长度介于 1 - 20 个字符之间")
     private String title;
@@ -24,13 +22,17 @@ public class TbContent extends BaseEntity {
     @Length(min = 1, message = "内容不可为空")
     private String content;
 
-    public Long getCategoryId() {
-        return categoryId;
+    @NotNull(message = "父级类目不能为空")
+    private TbContentCategory tbContentCategory;
+
+    public TbContentCategory getTbContentCategory() {
+        return tbContentCategory;
     }
 
-    public void setCategoryId(Long categoryId) {
-        this.categoryId = categoryId;
+    public void setTbContentCategory(TbContentCategory tbContentCategory) {
+        this.tbContentCategory = tbContentCategory;
     }
+
 
     public String getTitle() {
         return title;

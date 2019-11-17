@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/static/assets/plugins/jquery-ztree/css/zTreeStyle/zTreeStyle.min.css">
     <link rel="stylesheet" href="/static/assets/plugins/dropzone/dropzone.css" />
     <link rel="stylesheet" href="/static/assets/plugins/dropzone/min/basic.min.css" />
+    <link rel="stylesheet" href="/static/assets/plugins/wangEditor/wangEditor.min.css" />
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -23,7 +24,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                ${tbUser.id == null ? "新增" : "编辑"}内容
+                ${tbContent.id == null ? "新增" : "编辑"}内容
                 <small>控制面板</small>
             </h1>
             <ol class="breadcrumb">
@@ -63,7 +64,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="title" class="col-sm-2 control-label">subTitle</label>
+                                    <label for="subTitle" class="col-sm-2 control-label">subTitle</label>
 
                                     <div class="col-sm-10">
                                         <form:input path="subTitle" cssClass="form-control" placeholder="SubTitle"/>
@@ -84,7 +85,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="url" class="col-sm-2 control-label">pic</label>
+                                    <label for="pic" class="col-sm-2 control-label">pic</label>
 
                                     <div class="col-sm-10">
                                         <form:input path="pic" cssClass="form-control" placeholder="Pic"/>
@@ -92,7 +93,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="url" class="col-sm-2 control-label">pic2</label>
+                                    <label for="pic2" class="col-sm-2 control-label">pic2</label>
 
                                     <div class="col-sm-10">
                                         <form:input path="pic2" cssClass="form-control" placeholder="Pic2"/>
@@ -100,10 +101,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="url" class="col-sm-2 control-label">content</label>
+                                    <label for="content" class="col-sm-2 control-label">content</label>
 
                                     <div class="col-sm-10">
-                                        <form:textarea path="content" cssClass="form-control" placeholder="Content"/>
+                                        <!--此处为隐藏域内容-->
+                                        <form:hidden path="content"/>
+
+                                        <div id="editor">${tbContent.content}</div>
                                     </div>
                                 </div>
 
@@ -111,7 +115,7 @@
                             <!-- /.box-body -->
                             <div class="box-footer">
                                 <button type="button" class="btn btn-default" onclick="history.go(-1)">返回</button>
-                                <button type="submit" class="btn btn-info pull-right">提交</button>
+                                <button type="submit" id="btnSubmit" class="btn btn-info pull-right">提交</button>
                             </div>
                             <!-- /.box-footer -->
                         </form:form>
@@ -128,6 +132,7 @@
 
 <script src="/static/assets/plugins/jquery-ztree/js/jquery.ztree.core-3.5.min.js"></script>
 <script src="/static/assets/plugins/dropzone/min/dropzone.min.js"></script> //图片上传
+<script src="/static/assets/plugins/wangEditor/wangEditor.min.js"></script>
 <%--在footer下方使用否则无法使用相关的JS导入工具--%>
 <tags:modal title="请选择" message="<ul id='myTree' class='ztree'></ul>"/>
 <script>
@@ -158,6 +163,16 @@
                 $("#pic2").val(data.fileName);
             });
         }
+    });
+
+    var E = window.wangEditor;
+    var editor = new E('#editor');
+    editor.customConfig.uploadImgServer = "/upload";
+    editor.customConfig.uploadFileName = "dropFile"
+    editor.create();
+    $("#btnSubmit").bind("click", function () {
+        var contentHtml = editor.txt.html();
+        $("#content").val(contentHtml);
     });
 </script>
 </body>

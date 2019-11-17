@@ -119,7 +119,7 @@
                     if(row.pic2 == null)
                         return '';
                     //pic2
-                    return '<a href="' + row.pic2 + '" target="_blank">图片2</a>';
+                    return '<a href="' +file_path + row.pic2 + '" target="_blank">图片2</a>';
                 }},
             //使用DateTime工具类进行时间数据的格式化
             {"data":function (row,type,val,meta) {

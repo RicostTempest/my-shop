@@ -2,10 +2,10 @@ package com.windsoft.my.shop.web.admin.service.impl;
 
 import com.windsoft.my.shop.commons.dto.BaseResult;
 import com.windsoft.my.shop.commons.dto.PageInfo;
+import com.windsoft.my.shop.commons.validator.BeanValidator;
 import com.windsoft.my.shop.domain.TbUser;
 import com.windsoft.my.shop.web.admin.dao.TbUserDao;
 import com.windsoft.my.shop.web.admin.service.TbUserService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -30,8 +30,12 @@ public class TbUserServiceImpl implements TbUserService {
 
     @Override
     public BaseResult save(TbUser tbUser) {
-        BaseResult baseResult = checkTbUser(tbUser);
-        if(baseResult.getStatus() == BaseResult.STATUS_SUCCESS){
+        String validator = BeanValidator.validator(tbUser);
+        if(validator != null){
+            return BaseResult.fail(validator);
+        }
+        //通过验证
+        else{
             tbUser.setUpdated(new Date());
             //增加用户
             if(tbUser.getId() == null){
@@ -44,9 +48,8 @@ public class TbUserServiceImpl implements TbUserService {
                 tbUserDao.update(tbUser);
             }
 
-            baseResult.setMessage("保存用户成功");
+            return BaseResult.success("保存信息成功");
         }
-        return baseResult;
     }
 
     @Override
@@ -126,15 +129,4 @@ public class TbUserServiceImpl implements TbUserService {
         return tbUserDao.count(tbUser);
     }
 
-    private BaseResult checkTbUser(TbUser tbUser){
-        BaseResult baseResult = BaseResult.success();
-
-        if (StringUtils.isBlank(tbUser.getUsername())){
-            baseResult = BaseResult.fail("姓名不能为空");
-        }else if(StringUtils.isBlank(tbUser.getEmail())) {
-            baseResult = BaseResult.fail("邮箱不能为空");
-        }
-
-        return baseResult;
-    }
 }

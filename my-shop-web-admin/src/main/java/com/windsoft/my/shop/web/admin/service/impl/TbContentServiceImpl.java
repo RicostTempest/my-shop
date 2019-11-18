@@ -45,21 +45,4 @@ public class TbContentServiceImpl extends AbstractBaseServiceImpl<TbContent, TbC
     public List<TbContent> search(String keyword) {
         return null;
     }
-
-    @Override
-    public PageInfo<TbContent> page(int start, int length, int draw, TbContent tbContent) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("start",start);
-        params.put("length",length);
-        params.put("tbContent",tbContent);
-
-        int count = count(tbContent);
-        PageInfo<TbContent> pageInfo = new PageInfo<>();
-        pageInfo.setDraw(draw);
-        pageInfo.setRecordsTotal(count);
-        pageInfo.setRecordsFiltered(count);
-        pageInfo.setData(getDao().page(params));
-
-        return pageInfo;
-    }
 }

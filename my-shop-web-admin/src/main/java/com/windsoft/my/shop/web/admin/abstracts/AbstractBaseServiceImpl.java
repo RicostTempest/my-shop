@@ -7,6 +7,7 @@ import com.windsoft.my.shop.commons.persistence.BaseEntity;
 import com.windsoft.my.shop.commons.persistence.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,5 +70,22 @@ public abstract class AbstractBaseServiceImpl<T extends BaseEntity, D extends Ba
     @Override
     public int count(T entity) {
         return dao.count(entity);
+    }
+
+    @Override
+    public PageInfo<T> page(int start, int length, int draw, T entity) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("start",start);
+        params.put("length",length);
+        params.put("pageParams",entity);
+
+        int count = count(entity);
+        PageInfo<T> pageInfo = new PageInfo<>();
+        pageInfo.setDraw(draw);
+        pageInfo.setRecordsTotal(count);
+        pageInfo.setRecordsFiltered(count);
+        pageInfo.setData(dao.page(params));
+
+        return pageInfo;
     }
 }

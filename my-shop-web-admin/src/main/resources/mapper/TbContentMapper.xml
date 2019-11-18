@@ -90,8 +90,8 @@
         tb_content AS tb
         <include refid="tbContentJoins"/>
         <where>
-            <if test="tbContent.title != null and tbContent.title !='' ">
-                AND tb.title LIKE CONCAT ('%',#{tbContent.title},'%')
+            <if test="pageParams.title != null and pageParams.title !='' ">
+                AND tb.title LIKE CONCAT ('%',#{pageParams.title},'%')
             </if>
         </where>
         LIMIT #{start}, #{length}

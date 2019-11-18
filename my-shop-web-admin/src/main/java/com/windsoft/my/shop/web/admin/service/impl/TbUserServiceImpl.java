@@ -72,21 +72,4 @@ public class TbUserServiceImpl extends AbstractBaseServiceImpl<TbUser, TbUserDao
         tbUser.setUsername(keyword);
         return getDao().search(tbUser);
     }
-
-    @Override
-    public PageInfo<TbUser> page(int start, int length, int draw, TbUser tbUser) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("start",start);
-        params.put("length",length);
-        params.put("tbUser",tbUser);
-
-        int count = count(tbUser);
-        PageInfo<TbUser> pageInfo = new PageInfo<>();
-        pageInfo.setDraw(draw);
-        pageInfo.setRecordsTotal(count);
-        pageInfo.setRecordsFiltered(count);
-        pageInfo.setData(getDao().page(params));
-
-        return pageInfo;
-    }
 }

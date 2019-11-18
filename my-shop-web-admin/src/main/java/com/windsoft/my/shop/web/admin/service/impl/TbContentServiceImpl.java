@@ -4,6 +4,7 @@ import com.windsoft.my.shop.commons.dto.BaseResult;
 import com.windsoft.my.shop.commons.dto.PageInfo;
 import com.windsoft.my.shop.commons.validator.BeanValidator;
 import com.windsoft.my.shop.domain.TbContent;
+import com.windsoft.my.shop.web.admin.abstracts.AbstractBaseServiceImpl;
 import com.windsoft.my.shop.web.admin.dao.TbContentDao;
 import com.windsoft.my.shop.web.admin.service.TbContentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class TbContentServiceImpl implements TbContentService {
-    @Autowired
-    TbContentDao tbContentDao;
-
-    @Override
-    public List<TbContent> selectAll() {
-        return tbContentDao.selectAll();
-    }
+public class TbContentServiceImpl extends AbstractBaseServiceImpl<TbContent, TbContentDao> implements TbContentService {
 
     @Override
     public BaseResult save(TbContent tbContent) {
@@ -36,11 +30,11 @@ public class TbContentServiceImpl implements TbContentService {
             //增加用户
             if(tbContent.getId() == null){
                 tbContent.setCreated(new Date());
-                tbContentDao.insert(tbContent);
+                getDao().insert(tbContent);
             }
             //编辑用户
             else {
-                tbContentDao.update(tbContent);
+                update(tbContent);
             }
 
             return BaseResult.success("保存内容信息成功");
@@ -48,28 +42,8 @@ public class TbContentServiceImpl implements TbContentService {
     }
 
     @Override
-    public void delete(Long id) {
-        tbContentDao.delete(id);
-    }
-
-    @Override
-    public TbContent getById(Long id) {
-        return tbContentDao.getById(id);
-    }
-
-    @Override
-    public void update(TbContent tbContent) {
-        tbContentDao.update(tbContent);
-    }
-
-    @Override
     public List<TbContent> search(String keyword) {
         return null;
-    }
-
-    @Override
-    public void deleteMulti(String[] ids) {
-        tbContentDao.deleteMulti(ids);
     }
 
     @Override
@@ -79,18 +53,13 @@ public class TbContentServiceImpl implements TbContentService {
         params.put("length",length);
         params.put("tbContent",tbContent);
 
-        int count = tbContentDao.count(tbContent);
+        int count = count(tbContent);
         PageInfo<TbContent> pageInfo = new PageInfo<>();
         pageInfo.setDraw(draw);
         pageInfo.setRecordsTotal(count);
         pageInfo.setRecordsFiltered(count);
-        pageInfo.setData(tbContentDao.page(params));
+        pageInfo.setData(getDao().page(params));
 
         return pageInfo;
-    }
-
-    @Override
-    public int count(TbContent tbContent) {
-        return tbContentDao.count(tbContent);
     }
 }

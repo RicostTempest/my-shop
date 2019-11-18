@@ -1,19 +1,15 @@
 package com.windsoft.my.shop.web.admin.service.impl;
 
 import com.windsoft.my.shop.commons.dto.BaseResult;
-import com.windsoft.my.shop.commons.dto.PageInfo;
 import com.windsoft.my.shop.commons.validator.BeanValidator;
 import com.windsoft.my.shop.domain.TbContent;
 import com.windsoft.my.shop.web.admin.abstracts.AbstractBaseServiceImpl;
 import com.windsoft.my.shop.web.admin.dao.TbContentDao;
 import com.windsoft.my.shop.web.admin.service.TbContentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class TbContentServiceImpl extends AbstractBaseServiceImpl<TbContent, TbContentDao> implements TbContentService {

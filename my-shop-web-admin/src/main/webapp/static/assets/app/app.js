@@ -59,6 +59,10 @@ var App = function () {
         });
     };
 
+    /**
+     * 实现删除操作
+     * @param url 调用的控制器方法路径
+     */
     var handlerDeleteData = function (url) {
         $("#modal-default").modal("hide");
 
@@ -96,6 +100,12 @@ var App = function () {
         }
     };
 
+    /**
+     * 单项删除
+     * @param url
+     * @param id
+     * @param msg
+     */
     var handlerDeleteSignel = function (url, id, msg) {
         //可选参数的设置，防止报错
         if (!msg == null){
@@ -115,6 +125,10 @@ var App = function () {
         });
     };
 
+    /**
+     * 多项删除
+     * @param url
+     */
     var handlerDeleteMulti = function (url) {
         _idArray = new Array();
 

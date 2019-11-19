@@ -7,14 +7,17 @@ import com.windsoft.my.shop.web.admin.abstracts.AbstractBaseServiceImpl;
 import com.windsoft.my.shop.web.admin.dao.TbContentDao;
 import com.windsoft.my.shop.web.admin.service.TbContentService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true) //事务开启，全类方法只读数据库
 public class TbContentServiceImpl extends AbstractBaseServiceImpl<TbContent, TbContentDao> implements TbContentService {
 
     @Override
+    @Transactional(readOnly = false)  //事务开启，该方法可写数据库
     public BaseResult save(TbContent tbContent) {
         String validator = BeanValidator.validator(tbContent);
         if(validator != null){

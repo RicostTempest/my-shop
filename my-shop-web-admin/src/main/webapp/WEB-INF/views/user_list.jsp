@@ -123,7 +123,7 @@
                     return  '<div class="btn-group">'+
                         '<button type="button" class="btn btn-default" onclick="App.showDetail(\'' + detailUrl + '\')"><i class="fa fa-fw fa-tags"></i></button>'+
                         '<a href="/user/form?id='+ row.id +'" type="button" class="btn btn-default"><i class="fa fa-edit"></i></a>'+
-                        '<button type="button" class="btn btn-default"><i class="fa fa-fw fa-trash"></i></button>'+
+                        '<button type="button" class="btn btn-default" onclick="App.deleteSignel(\'/user/delete\''+','+row.id+')"><i class="fa fa-fw fa-trash"></i></button>'+
                         '</div>'
                 }}
         ];

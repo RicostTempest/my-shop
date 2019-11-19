@@ -12,7 +12,7 @@ import javax.validation.constraints.Pattern;
  * @Date: 2019/10/15 10:18
  */
 public class TbUser extends BaseEntity {
-    @Length(min = 6, max = 20, message = "用户名长度必须介于 6 和 20 之间")
+    @Length(min = 1, max = 20, message = "用户名长度必须介于 1 和 20 之间")
     private String username;
     @Length(min = 6, max = 20, message = "密码长度必须介于 6 和 20 之间")
     private String password;

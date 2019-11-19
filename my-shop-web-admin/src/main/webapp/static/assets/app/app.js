@@ -59,6 +59,62 @@ var App = function () {
         });
     };
 
+    var handlerDeleteData = function (url) {
+        $("#modal-default").modal("hide");
+
+        if(_idArray.length == 0){
+            //...
+        }
+        else{
+            setTimeout(function () {
+                $.ajax({
+                    "url":url,
+                    "type":"POST",
+                    "data":{"ids":_idArray.toString()},
+                    "dataType":"JSON",
+                    "success":function (data) {
+                        //解除事件绑定
+                        $("#checkboxOk").unbind("click");
+                        if(data.status == 200){
+                            $("#checkboxOk").bind("click",function () {
+                                window.location.reload();
+                            });
+                        }
+                        //删除失败
+                        else{
+                            //强制更改绑定事件
+                            $("#checkboxOk").bind("click",function () {
+                                $("#modal-default").modal("hide");
+                            });
+                        }
+                        $("#modal-default").modal("show");
+                        $("#model-message").html(data.message);
+                    }
+                });
+            },500);
+
+        }
+    };
+
+    var handlerDeleteSignel = function (url, id, msg) {
+        //可选参数的设置，防止报错
+        if (!msg == null){
+            msg = null;
+        }
+
+        _idArray = new Array();
+        _idArray.push(id);
+
+        $("#model-message").html(msg == null ? "确定删除数据吗？" : msg);
+        //点击删除按钮时弹框
+        $("#modal-default").modal("show");
+
+        //绑定删除事件
+        $("#checkboxOk").bind("click",function () {
+            handlerDeleteData(url);
+        });
+    };
+
     var handlerDeleteMulti = function (url) {
         _idArray = new Array();
 
@@ -81,49 +137,9 @@ var App = function () {
 
         //为确定键绑定删除方法
         $("#checkboxOk").bind("click",function () {
-            del();
+            handlerDeleteData(url);
         });
 
-        /**
-         * 当前私有函数的私有函数
-         * 只在父函数中能被调用
-         */
-        function del() {
-            $("#modal-default").modal("hide");
-
-            if(_idArray.length == 0){
-                //...
-            }
-            else{
-                setTimeout(function () {
-                    $.ajax({
-                        "url":url,
-                        "type":"POST",
-                        "data":{"ids":_idArray.toString()},
-                        "dataType":"JSON",
-                        "success":function (data) {
-                            //接触事件绑定
-                            $("#checkboxOk").unbind("click");
-                            if(data.status == 200){
-                                $("#checkboxOk").bind("click",function () {
-                                    window.location.reload();
-                                });
-                            }
-                            //删除失败
-                            else{
-                                //强制更改绑定事件
-                                $("#checkboxOk").bind("click",function () {
-                                    $("#modal-default").modal("hide");
-                                });
-                            }
-                            $("#modal-default").modal("show");
-                            $("#model-message").html(data.message);
-                        }
-                    });
-                },500);
-
-            }
-        }
     };
 
     /**
@@ -237,7 +253,9 @@ var App = function () {
             handlerInitCheckBox();
             handlerCheckboxAll();
         },
-
+        deleteSignel:function(url,id,msg){
+            return handlerDeleteSignel(url,id,msg);
+        },
         deleteMulti:function (url) {
             return handlerDeleteMulti(url);
         },

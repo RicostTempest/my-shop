@@ -1,15 +1,11 @@
-package com.windsoft.my.shop.web.api.web.controller;
+package com.windsoft.my.shop.web.api.web.controller.v1;
 
 import com.windsoft.my.shop.domain.TbContent;
-import com.windsoft.my.shop.domain.TbContentCategory;
 import com.windsoft.my.shop.web.api.service.TbContentService;
 import com.windsoft.my.shop.web.api.web.dto.TbContentDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +19,7 @@ import java.util.List;
  **/
 
 @RestController  //此注解标识的累返回类型都是JSON
-@RequestMapping(value = "content")
+@RequestMapping(value = "${api.path.v1}/content")
 public class TbContentController {
     @Autowired
     private TbContentService tbContentService;
@@ -43,8 +39,14 @@ public class TbContentController {
         return tbContent;
     }
 
-    @RequestMapping(value = "findContentByCategoryId", method = RequestMethod.GET)
-    public List<TbContentDTO> findContentByCategoryId(Long categoryId){
+    /**
+     * (category_id}与@PathVariable(value = "category_id")组合指定阐述
+     * @param categoryId
+     * @return
+     */
+    @RequestMapping(value = "{category_id}", method = RequestMethod.GET)
+    public List<TbContentDTO> findContentByCategoryId(@PathVariable(value = "category_id")
+                                                      Long categoryId){
         List<TbContentDTO> tbContentDTOS = null;
         List<TbContent> tbContents = tbContentService.selectByCategoryId(categoryId);
         if(tbContents != null && tbContents.size() >0){

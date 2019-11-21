@@ -11,7 +11,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 /**
@@ -95,6 +94,8 @@ public class HttpClientUtils {
                 httpGet.setHeader("Connection",REQUEST_HEADER_CONNECTION);
                 httpGet.setHeader("User-Agent",REQUEST_HEADER_USER_AGENT);
                 httpGet.setHeader("Cookie","cookie");
+
+                httpResponse = httpClient.execute(httpGet);
             }else if(POST.equals(requestMethod)){
                 httpPost = new HttpPost(url);
                 httpPost.setHeader("Connection",REQUEST_HEADER_CONNECTION);

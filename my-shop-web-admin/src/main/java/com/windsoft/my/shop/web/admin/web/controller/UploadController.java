@@ -54,7 +54,7 @@ public class UploadController {
         }
 
         // 返回 JSON 数据，这里只带入了文件名
-        result.put("fileName", file.getName());
+        result.put("fileName", "/static/upload/" + file.getName());
 
         return result;
     }

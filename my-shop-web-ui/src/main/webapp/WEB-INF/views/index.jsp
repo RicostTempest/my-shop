@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>My-Shop首页</title>
@@ -566,16 +567,14 @@
 <!--轮播图-->
 <div id="lunbo">
     <ul id="one">
-        <li><a href=""><img src="/static/images/banner.jpg"></a></li>
-        <li><a href=""><img src="/static/images/banner1.jpg"></a></li>
-        <li><a href=""><img src="/static/images/banner.jpg"></a></li>
-        <li><a href=""><img src="/static/images/banner1.jpg"></a></li>
+        <c:forEach items="${ppts}" var="ppt">
+            <li><a href=""><img src="${ppt.pic}"></a></li>
+        </c:forEach>
     </ul>
     <ul id="two">
-        <li class="on">1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
+        <c:forEach items="${ppts}" var="ppt" varStatus="status">
+            <li class="${status.count == 1 ? "on" : ""}">${status.count}</li>
+        </c:forEach>
     </ul>
     <!--轮播图左右箭头-->
     <div class="slider-page">

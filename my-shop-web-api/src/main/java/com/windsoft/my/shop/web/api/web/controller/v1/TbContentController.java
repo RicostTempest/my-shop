@@ -1,5 +1,6 @@
 package com.windsoft.my.shop.web.api.web.controller.v1;
 
+import com.windsoft.my.shop.commons.dto.BaseResult;
 import com.windsoft.my.shop.domain.TbContent;
 import com.windsoft.my.shop.web.api.service.TbContentService;
 import com.windsoft.my.shop.web.api.web.dto.TbContentDTO;
@@ -45,7 +46,7 @@ public class TbContentController {
      * @return
      */
     @RequestMapping(value = "{category_id}", method = RequestMethod.GET)
-    public List<TbContentDTO> findContentByCategoryId(@PathVariable(value = "category_id")
+    public BaseResult findContentByCategoryId(@PathVariable(value = "category_id")
                                                       Long categoryId){
         List<TbContentDTO> tbContentDTOS = null;
         List<TbContent> tbContents = tbContentService.selectByCategoryId(categoryId);
@@ -56,10 +57,11 @@ public class TbContentController {
                 TbContentDTO tbContentDTO = new TbContentDTO();
                 //使用反射机制进行数据拷贝注入 由Spring提供
                 BeanUtils.copyProperties(tbContent,tbContentDTO);
+                tbContentDTO.setPic("http://localhost:8080/"+tbContentDTO.getPic());
                 tbContentDTOS.add(tbContentDTO);
             }
         }
 
-        return tbContentDTOS;
+        return BaseResult.success("成功",tbContentDTOS);
     }
 }

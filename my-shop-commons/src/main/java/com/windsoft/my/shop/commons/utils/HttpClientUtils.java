@@ -93,14 +93,14 @@ public class HttpClientUtils {
                 httpGet = new HttpGet(url);
                 httpGet.setHeader("Connection",REQUEST_HEADER_CONNECTION);
                 httpGet.setHeader("User-Agent",REQUEST_HEADER_USER_AGENT);
-                httpGet.setHeader("Cookie","cookie");
+                httpGet.setHeader("Cookie",cookie);
 
                 httpResponse = httpClient.execute(httpGet);
             }else if(POST.equals(requestMethod)){
                 httpPost = new HttpPost(url);
                 httpPost.setHeader("Connection",REQUEST_HEADER_CONNECTION);
                 httpPost.setHeader("User-Agent",REQUEST_HEADER_USER_AGENT);
-                httpPost.setHeader("Cookie","cookie");
+                httpPost.setHeader("Cookie",cookie);
 
                 if(params != null && params.length>0){
                     httpPost.setEntity(new UrlEncodedFormEntity(Arrays.asList(params),"UTF-8"));

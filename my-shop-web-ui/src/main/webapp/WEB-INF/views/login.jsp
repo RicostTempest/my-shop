@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -50,20 +51,25 @@
                 </div>
             </div>
             <div class="kengl_kuang">
-                <div class="txt_kuang">
-                    <input type="text" class="itxt"  placeholder="邮箱/用户名/已验证手机">
-                    <input type="text" class="itxt"  placeholder="密码">
-                </div>
-                <div class="remember">
-                    <div class="fl">
-                        <input type="checkbox" >
-                        <label for="autoLoginFlag">自动登录</label>
+                <c:if test="${baseResult != null}">
+                    <div class="red">${baseResult.message}</div>
+                </c:if>
+                <form action="/login" method="post">
+                    <div class="txt_kuang">
+                        <input id="username" name="username" type="text" class="itxt"  placeholder="邮箱/用户名/已验证手机">
+                        <input id="password" name="password" type="password" class="itxt"  placeholder="密码">
                     </div>
-                    <div class="fr">
-                        <a href="#" class="fl" target="_blank" title="忘记密码">忘记密码?</a>
+                    <div class="remember">
+                        <div class="fl">
+                            <input type="checkbox" >
+                            <label for="autoLoginFlag">自动登录</label>
+                        </div>
+                        <div class="fr">
+                            <a href="#" class="fl" target="_blank" title="忘记密码">忘记密码?</a>
+                        </div>
                     </div>
-                </div>
-                <input type="button" tabindex="5" value="登 录" class="btnnuw">
+                    <input type="submit" tabindex="5" value="登 录" class="btnnuw">
+                </form>
             </div>
             <div class="corp_login">
                 <div class="mingb_shoq"><a href="#">名榜授权登录！</a></div>

@@ -43,7 +43,7 @@
         FROM
         tb_user AS a
         WHERE
-            a.email = #{username}
+           a.email = #{username}
         OR a.phone = #{username}
         OR a.username = #{username}
     </select>
